@@ -1,18 +1,23 @@
-// Last updated: 07/08/2025, 18:38:48
+// Last updated: 07/08/2025, 20:23:52
 public class Solution {
-    public string LongestCommonPrefix(string[] strs) {
-        string prefix = "";
-
-        for(int i = 0; i < strs[0].Length; i++){
-            char c = strs[0][i];
-            for(int j = 1; j < strs.Length; j++){
-                if(i >= strs[j].Length || strs[j][i] != c){
-                    return prefix;
+    public bool IsValid(string s) {
+        Stack<char> stack = new Stack<char>();
+         Dictionary<char, char> hashMap = new Dictionary<char, char>()
+        {
+            {')', '('},
+            {'}', '{'},
+            {']', '['},
+        };
+        for(int i = 0; i < s.Length; i++){
+            if (hashMap.ContainsKey(s[i])) {
+                if (stack.Count == 0 || stack.Pop() != hashMap[s[i]]) {
+                    return false;
                 }
+            } else {
+                stack.Push(s[i]);
             }
-            prefix += c;
         }
 
-        return prefix;
+        return stack.Count == 0;
     }
 }
